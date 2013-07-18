@@ -57,14 +57,6 @@ define( function (require) {
 			this.playVideo(this.curVideoIndex);
 		},
 
-		//getters
-
-		getInfo : function() {
-			return {
-				videoIndex : this.curVideoIndex
-			}
-		},
-
 		loadPlaylist : function() {
 
 			var pID = "PLEC422D53B7588DC7";
@@ -73,20 +65,18 @@ define( function (require) {
 
 			$.getJSON( url , function( json ) {
 
-
 			   var videos = json.items;
-			   console.log(videos)
-			   for( var i = 0 ; i < videos.length ; i++) {
-			   	var vID = videos[i].contentDetails.videoId;
-			   	self.youtubeIdArray.push(vID);
 
-			   	console.log(self.startVideo,vID)
-			   	if(self.startVideo && self.startVideo == vID){
-			   		self.curVideoIndex = i;
-			   		console.log("WE MATCHE!!!")
-			   	}
+				for( var i = 0 ; i < videos.length ; i++) {
+					var vID = videos[i].contentDetails.videoId;
+					self.youtubeIdArray.push(vID);
 
-			   }
+					//if start video matches an id, start with this video
+					if(self.startVideo && self.startVideo == vID){
+						self.curVideoIndex = i;
+					}
+				}
+
 			   self.startPlayingVideos();
 			   
 			 });
@@ -95,7 +85,7 @@ define( function (require) {
 		startPlayingVideos : function() {
 
 			Youtube.createPlayer({
-				el:this.$el.find(".view") ,
+				el:this.$el.find(".view"),
 				uniqueID : this.playerId
 			});
 
@@ -103,8 +93,6 @@ define( function (require) {
 		},
 
 		playVideo : function(index) {
-
-			//do stuff relative to pos here
 
 			//playing video
 			var id = this.youtubeIdArray[index];

@@ -56,7 +56,6 @@ define( function (require) {
 				startVideo : videoID
 			});
 
-			// console.log(Router.curVideo);
 		}
 
 	});
